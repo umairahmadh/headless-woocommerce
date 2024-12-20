@@ -94,8 +94,8 @@ export async function middleware(req: NextRequest) {
   const pathname = req.nextUrl.pathname;
 
   // Use a different name locally to avoid conflict
-  const typedCategoryPaths: string[] = CATEGORY_PATHS as string[];
-
+  const typedCategoryPaths: string[] = Array.isArray(CATEGORY_PATHS) ? CATEGORY_PATHS : [];
+  console.log('CATEGORY_PATHS:', CATEGORY_PATHS);
   // Now you can use typedCategoryPaths
   const isCatalogPage = Array.isArray(typedCategoryPaths) && typedCategoryPaths.includes((pathname.replace(PAGE_URL_PATTERN, '') || '').toString());
 
