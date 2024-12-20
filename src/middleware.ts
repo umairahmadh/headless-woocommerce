@@ -8,7 +8,6 @@ import { getDefaultCountry } from '@src/lib/helpers/country';
 import { getHomePageSlug, getPageSlugs } from '@src/lib/typesense/page';
 import { stripLeadingSlash } from '@src/lib/helpers/helper';
 
-const CATEGORY_PATHS: string[] = CATEGORY_PATHS as string[];
 // Limit middleware pathname config
 export const config = {
   matcher: [
@@ -94,7 +93,14 @@ export async function middleware(req: NextRequest) {
 
   const pathname = req.nextUrl.pathname;
 
-  const isCatalogPage = CATEGORY_PATHS.includes(pathname.replace(PAGE_URL_PATTERN, ''));
+  // Use a different name locally to avoid conflict
+  const typedCategoryPaths: string[] = CATEGORY_PATHS as string[];
+
+  // Now you can use typedCategoryPaths
+  const isCatalogPage = Array.isArray(typedCategoryPaths) && typedCategoryPaths.includes((pathname.replace(PAGE_URL_PATTERN, '') || '').toString());
+
+  
+  //const isCatalogPage = CATEGORY_PATHS.includes(pathname.replace(PAGE_URL_PATTERN, ''));
   
   
   if (isCatalogPage) {
