@@ -89,19 +89,10 @@ export async function middleware(req: NextRequest) {
     return response;
   }
 
-
-
   const pathname = req.nextUrl.pathname;
 
-  // Use a different name locally to avoid conflict
-  const typedCategoryPaths: string[] = Array.isArray(CATEGORY_PATHS) ? CATEGORY_PATHS : [];
-  // Now you can use typedCategoryPaths
-  const isCatalogPage = Array.isArray(typedCategoryPaths) && typedCategoryPaths.includes((pathname.replace(PAGE_URL_PATTERN, '') || '').toString());
+  const isCatalogPage = CATEGORY_PATHS.includes(pathname.replace(PAGE_URL_PATTERN, ''));
 
-  
-  //const isCatalogPage = CATEGORY_PATHS.includes(pathname.replace(PAGE_URL_PATTERN, ''));
-  
-  
   if (isCatalogPage) {
     req.nextUrl.pathname = `/${currentCountry}/product-category${pathname}`;
 
@@ -117,7 +108,6 @@ export async function middleware(req: NextRequest) {
   if ('/' === modifiedPathName) {
     modifiedPathName = getHomePageSlug();
   }
-
 
   // We remove the leading slash since slugs we save doesn't have it to make sure this goes to the right nextjs page path
   modifiedPathName = stripLeadingSlash(modifiedPathName);
