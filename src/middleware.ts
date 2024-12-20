@@ -93,6 +93,9 @@ export async function middleware(req: NextRequest) {
 
   //const isCatalogPage = CATEGORY_PATHS.includes(pathname.replace(PAGE_URL_PATTERN, ''));
   const isCatalogPage = CATEGORY_PATHS.includes(pathname.replace(PAGE_URL_PATTERN, '') as string);
+  const isCatalogPage = Array.isArray(CATEGORY_PATHS) && CATEGORY_PATHS.includes((pathname.replace(PAGE_URL_PATTERN, '') || '').toString());
+
+  if (isCatalogPage) {req.nextUrl.pathname = `/${currentCountry}/product-category${pathname}`;}
 
   if (isCatalogPage) {
     req.nextUrl.pathname = `/${currentCountry}/product-category${pathname}`;
