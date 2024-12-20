@@ -89,8 +89,9 @@ export async function middleware(req: NextRequest) {
     return response;
   }
 
-  const pathname = req.nextUrl.pathname;
-
+  // const pathname = req.nextUrl.pathname;
+  const pathname: string = req.nextUrl.pathname;
+  const result: any[] = [];
   const isCatalogPage = CATEGORY_PATHS.includes(pathname.replace(PAGE_URL_PATTERN, ''));
 
   if (isCatalogPage) {
